@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Text Summarizer",
+  "version": "1.0",
+  "description": "Summarize selected text on any webpage",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "tts"
+  ],
+  "host_permissions": [
+    "http://localhost:5000/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["content_copy.svg", "aiSummarizerIcon.svg"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["style.css"]
+    }
+  ]
+}
