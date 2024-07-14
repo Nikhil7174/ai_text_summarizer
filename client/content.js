@@ -1,13 +1,13 @@
 let summarizer = null;
 let summaryBox = null;
 
-function initializeExtension() {
+const initializeExtension = () => {
   document.removeEventListener('mouseup', handleTextSelection);
   document.addEventListener('mouseup', handleTextSelection);
   document.addEventListener('click', handleDocumentClick);
 }
 
-function handleTextSelection(event) {
+const handleTextSelection = (event) => {
   const selection = window.getSelection();
   const selectedText = selection.toString().trim();
   if (selectedText.length > 0 && !(summaryBox && summaryBox.contains(selection.anchorNode))) {
@@ -17,7 +17,7 @@ function handleTextSelection(event) {
   }
 }
 
-function handleDocumentClick(event) {
+const handleDocumentClick = (event) => {
   if (
     summaryBox &&
     !summaryBox.contains(event.target) &&
@@ -27,7 +27,7 @@ function handleDocumentClick(event) {
   }
 }
 
-function showSummarizeIcon(selectedText, event) {
+const showSummarizeIcon = (selectedText, event) => {
   if (!summarizer) {
     summarizer = document.createElement('div');
     summarizer.id = 'summarizer-icon';
@@ -51,13 +51,13 @@ function showSummarizeIcon(selectedText, event) {
   summarizer.style.display = 'inline-block';
 }
 
-function hideSummarizeIcon() {
+const hideSummarizeIcon = () => {
   if (summarizer) {
     summarizer.style.display = 'none';
   }
 }
 
-function sendTextToSummarize(text) {
+const sendTextToSummarize = (text) => {
   showSummaryBox(true);
   try {
     chrome.runtime.sendMessage({ action: 'summarize', text: text }, response => {
@@ -74,7 +74,7 @@ function sendTextToSummarize(text) {
   }
 }
 
-function showSummaryBox(isLoading, summary = '', headerText = '') {
+const showSummaryBox = (isLoading, summary = '', headerText = '') => {
   if (!summaryBox) {
     summaryBox = document.createElement('div');
     summaryBox.id = 'summary-box';
@@ -112,7 +112,7 @@ function showSummaryBox(isLoading, summary = '', headerText = '') {
   summaryBox.style.display = 'block';
 }
 
-function hideSummaryBox() {
+const hideSummaryBox = () => {
   if (summaryBox) {
     summaryBox.style.animation = 'slideDown 0.3s ease-out';
     setTimeout(() => {
@@ -121,7 +121,7 @@ function hideSummaryBox() {
   }
 }
 
-function copyToClipboard(text) {
+const copyToClipboard = (text) => {
   navigator.clipboard.writeText(text).then(() => {
     showCopiedMessage();
   }).catch(err => {
@@ -129,7 +129,7 @@ function copyToClipboard(text) {
   });
 }
 
-function showCopiedMessage() {
+const showCopiedMessage = () => {
   const copyButton = document.getElementById('copy-button');
   if (!copyButton) return; 
 
