@@ -1,7 +1,7 @@
-import express from 'express';
-import { OpenAIClient, AzureKeyCredential } from '@azure/openai';
+import { AzureKeyCredential, OpenAIClient } from '@azure/openai';
 import dotenv from 'dotenv';
-import { uc1, ac1, ac2 } from './constants';
+import express from 'express';
+import { ac1, ac2, uc1 } from './constants.js';
 
 dotenv.config();
 
@@ -82,6 +82,11 @@ app.post('/summarize', async (req, res) => {
     console.error('Error:', error);
     res.status(500).json({ error: 'An error occurred while summarizing the text.' });
   }
+});
+
+app.get('/status', (req, res) => {
+  console.log("Status check");
+  res.send(`Open ai Server is running at port ${PORT}.`);
 });
 
 const PORT = process.env.PORT || 5000;
